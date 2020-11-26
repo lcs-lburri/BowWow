@@ -13,6 +13,7 @@
 		F2369EC0256FEBAF009EEC5C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2369EBF256FEBAF009EEC5C /* Preview Assets.xcassets */; };
 		F2369ECB256FEBAF009EEC5C /* BowWowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2369ECA256FEBAF009EEC5C /* BowWowTests.swift */; };
 		F2369ED6256FEBAF009EEC5C /* BowWowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2369ED5256FEBAF009EEC5C /* BowWowUITests.swift */; };
+		F2369EEF256FF4FC009EEC5C /* RandomDog.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2369EEE256FF4FC009EEC5C /* RandomDog.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		F2369ED1256FEBAF009EEC5C /* BowWowUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BowWowUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2369ED5256FEBAF009EEC5C /* BowWowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BowWowUITests.swift; sourceTree = "<group>"; };
 		F2369ED7256FEBAF009EEC5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2369EEE256FF4FC009EEC5C /* RandomDog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 			children = (
 				F2369EB8256FEBA5009EEC5C /* BowWowApp.swift */,
 				F2369EBA256FEBA5009EEC5C /* ContentView.swift */,
+				F2369EEE256FF4FC009EEC5C /* RandomDog.swift */,
 				F2369EBC256FEBAE009EEC5C /* Assets.xcassets */,
 				F2369EC1256FEBAF009EEC5C /* Info.plist */,
 				F2369EBE256FEBAF009EEC5C /* Preview Content */,
@@ -261,6 +264,7 @@
 			files = (
 				F2369EBB256FEBA5009EEC5C /* ContentView.swift in Sources */,
 				F2369EB9256FEBA5009EEC5C /* BowWowApp.swift in Sources */,
+				F2369EEF256FF4FC009EEC5C /* RandomDog.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
