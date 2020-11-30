@@ -11,6 +11,9 @@ struct ContentView: View {
     
     @State private var dogImage = UIImage()
     
+    //track the people we pull information about
+    @State private var people: [Person] = [] //empty array to start
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -27,11 +30,53 @@ struct ContentView: View {
                     .padding()
                 
                 Spacer()
+                List(people) { person in Text(person.name)}
             }
             .navigationTitle("bow WOW!")
         }
+        .onAppear() {fetchNames()}
     }
     
+    func fetchNames() {
+        
+        // 1. Prepare a URLRequest to send our encoded data as JSON
+        let url = URL(string: "https://api.sheety.co/4552dba5e262c3f1c2b5419dc65ef2e1/peopleInClass/sheet1")!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "GET"
+        
+        // 2. Run the request and process the response
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            // handle the result here – attempt to unwrap optional data provided by task
+            guard let personData = data else {
+                
+                // Show the error message
+                print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
+                
+                return
+            }
+            
+            // It seems to have worked? Let's see what we have
+            print(String(data: personData, encoding: .utf8)!)
+            
+            // Now decode from JSON into an array of Swift native data types
+            if let decodedPersonData = try? JSONDecoder().decode(People.self, from: personData) {
+                
+                print("People data decoded from JSON successfully")
+                
+                //update the UI on the main thread
+                DispatchQueue.main.async {
+                    people = decodedPersonData.sheet1
+                }
+            } else {
+                
+                print("Invalid response from server.")
+            }
+            
+        }.resume()
+        
+    }
     // Get a random pooch pic!
     func fetchMoreCuteness() {
         
@@ -73,44 +118,43 @@ struct ContentView: View {
         }.resume()
         
     }
+    // Get a random pooch pic!
     
     // Get the actual image data
-        func fetchImage(from address: String) {
+    func fetchImage(from address: String) {
+        
+        // 1. Prepare a URL that points to the image to be loaded
+        let url = URL(string: address)!
+        
+        // 2. Run the request and process the response
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            
+            // handle the result here – attempt to unwrap optional data provided by task
+            guard let imageData = data else {
+                
+                // Show the error message
+                print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
+                
+                return
+            }
+            
+           
+            // Attempt to create an instance of UIImage using the data from the server
+            guard let loadedDog = UIImage(data: imageData) else {
+                
+                // If we could not load the image from the server, show a default image
+                dogImage = UIImage(named: "example")!
+                return
+            }
+            
+            // Set the image loaded from the server so that it shows in the user interface
+            dogImage = loadedDog
+            
+        }.resume()
+        
+        
+    }
 
-            // 1. Prepare a URL that points to the image to be loaded
-            let url = URL(string: address)!
-            
-            // 2. Run the request and process the response
-            URLSession.shared.dataTask(with: url) { data, response, error in
-                
-                // handle the result here – attempt to unwrap optional data provided by task
-                guard let imageData = data else {
-                    
-                    // Show the error message
-                    print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
-                    
-                    return
-                }
-                
-                // Update the UI on the main thread
-                DispatchQueue.main.async {
-                                        
-                    // Attempt to create an instance of UIImage using the data from the server
-                    guard let loadedDog = UIImage(data: imageData) else {
-                        
-                        // If we could not load the image from the server, show a default image
-                        dogImage = UIImage(named: "example")!
-                        return
-                    }
-                    
-                    // Set the image loaded from the server so that it shows in the user interface
-                    dogImage = loadedDog
-                    
-                }
-                
-            }.resume()
-            
-        }
 }
 
 struct ContentView_Previews: PreviewProvider {
